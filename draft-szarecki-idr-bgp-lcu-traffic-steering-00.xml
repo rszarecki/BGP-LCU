@@ -494,10 +494,10 @@ TE-domain      TE-domain      TE-domain
          </t>
        </section>
        <section title="Expanding label sequence in NLRI on BGP border">
-         <t>The procedure of modification label(s) sequence in BGP-LCU NLRI described in <xref target="Option_B"/> is specifically designed to build labels stack in network control plane, as BGP-LCU path update propagates across domain border. As result, ingress node would learn &lt;COLOR,DESTINATION> prefixes with label stack needed to deliver traffic to DESTINATION, with desred treatment (T-intent), across all downstream domains.</t>
+         <t>The procedure of modification label(s) sequence in BGP-LCU NLRI described in <xref target="Option_B">"Option B"</xref> is specifically designed to build labels stack in network control plane, as BGP-LCU path update propagates across domain border. As result, ingress node would learn &lt;COLOR,DESTINATION> prefixes with label stack needed to deliver traffic to DESTINATION, with desred treatment (T-intent), across all downstream domains.</t>
        </section>
        <section title="Ingress recursive resolution">
-         <t>Since procedure described in  <xref target="Option_B"/> is optional for BGP-LCU implementation, this chapter provides description of techniques that allows biuld label stack, and address scale challanges as described above, when BGP-LCU speakers are configured in such a way that only single label is carried in NLRI (perform label manipulation as described in <xref target="Option_A"/>)</t>
+         <t>Since procedure described in  <xref target="Option_B">"Option B"</xref> is optional for BGP-LCU implementation, this chapter provides description of techniques that allows biuld label stack, and address scale challanges as described above, when BGP-LCU speakers are configured in such a way that only single label is carried in NLRI (perform label manipulation as described in <xref target="Option_A">"Option A"</xref></t>
          <t>The Recursive resolution of BGP-LCU Next-Hop attribute on ingress PE provides ability to construct label stack and relief transit BGP speakers (ASBRs and ABRs)label space pressure, even if BGP-LCU NLRI carry only single label (see chapter 6.4.1). Recursive resolution is matter of network design and ingress PE capability and is inherently supported by BGP-LCU.</t>
          <t>The below description is provided to the reader for convenience.</t>
          <t>To provide ingress PE with sufficient information for building and pushing label stack onto packet, in addition to signal path for every &lt;COLOR,EGRESS-PE> combination, would require signaling (in BGP-LCU) also path for &lt;COLOR,ASBR/ABR> combination. Please note that typically number of ASBRs/ABRs is two or three orders of magnitude lower than PEs. Also, note that if given node is ASBR and PE, is should not be double-counted. Therefor impact on BGP-LCU path scale is expected to be &lt; 1%. and therefore negligible.</t>
@@ -556,11 +556,12 @@ TE-domain      TE-domain      TE-domain
        </list></t>
        <t>Authors of this document acknowledges that currently there is equipment in field and in development, that have limited capability in pushing deep label stack (Legacy-PE).</t>
        <t>To support such devices in ingress role, egress ASBR/ABR (node "E" on <xref target="fig_6"/>) of ingress TE-DOMAIN comprising such PE (node "Z" on <xref target="fig_6"/>)have to "reduce" stack depth.</t>
-       <t>Provided that egress ASBR (node "E") learns all BGP-LCU &lt;COLOR,DESTINATION> prefixes (e.g from Route Server), it advertises this BGP-LCU path to iBGP session toward (set of) ingress Legacy-PE, with BGP Next-Hop attribute change to self. As result, path would be re-advertised with only one label. This reduce required label push depth on legacy ingress PE.</t>
+       <t>Provided that egress ASBR (node "E") learns all BGP-LCU &lt;COLOR,DESTINATION> prefixes, it advertises this BGP-LCU path to iBGP session toward (set of) ingress Legacy-PE, with BGP Next-Hop attribute change to self and label modification as per <xref target="Option_A">"Option A"</xref>. As result, path would be re-advertised with only one label. This reduce required label push depth on legacy ingress PE.</t>
        <t>In the very high scale environment, by doing above, egress ASBR/ABR would consume large number of labels. Therefore, network designer needs to take this into consideration and if needed take appropriate action, which could be for example:</t>
        <t><list style="symbols">
          <t>filter colored prefixes that are send to (all) legacy ingress PEs to smaller subset. This technique is specifically effective if ingress PEs are part of backhaul solution and provide transport to limited set of centralized service-aware nodes (vEPC, BNG, Video caches)</t>
          <t>replace ingress PE hardware or software to enable deeper label push.</t>
+         <t>replace egress ASBR hardware or software to one that support higher label scale.</t>
        </list></t>
      </section>
    </section>
