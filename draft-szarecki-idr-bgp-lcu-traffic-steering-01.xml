@@ -564,6 +564,10 @@ TE-domain      TE-domain      TE-domain
          <t>replace egress ASBR hardware or software to one that support higher label scale.</t>
        </list></t>
      </section>
+     <!--<section title="Handling COLOR code conflicts between BGP-LCU and intra-domain tunnels">
+     </section>-->
+     <!--<section title="Handling COLOR code conflicts between two (or more) intersecting cooperating domain sets">
+     </section>-->
    </section>
 
 
