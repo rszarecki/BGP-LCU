@@ -52,7 +52,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-szarecki-idr-bgp-lcu-traffic-steering-00" ipr="trust200902">
+<rfc category="std" docName="draft-szarecki-idr-bgp-lcu-traffic-steering-01" ipr="trust200902">
  <!-- category values: std, bcp, info, exp, and historic
     ipr values: trust200902, noModificationTrust200902, noDerivativesTrust200902,
        or pre5378Trust200902
@@ -422,25 +422,45 @@ TE-domain      TE-domain      TE-domain
        </list></t>
      </section>
      <section title="Advertising BGP-LCU over eBGP session and iBGP session with BGP NH changed (NH-self)">
-       <t>Whenever BGP path to &lt;COLOR,DESTINATION> is re-advertised and BGP Next Hop attribute is changed, the label(s) portion of NLRI is modified. On the Next-Hop-change the BGP speaker replaces all label(s) in NLRI by single local label. The local label identifies &lt;COLOR, DESTINATION>. The value of local labels is derived as described in chapter 6.6. </t>
-       <t>Any BGP speaker supporting LABELED-COLORED-UNICAST (SAFI=[[TBD]]) MUST support above behavior on Next-hop-change.</t>
-       <t>Please note:</t>
-       <t><list style="symbols">
-         <t>This operation does not create &lt;COLOR,DESTINATION> entry in RIB.</t>
-         <t>This operation does not create any IP RIB entry.</t>
-         <t>This operation does not create any IP entry in FIB</t>
-         <t>This operation may create or modify MPLS entry in RIB and FIB.
-         <list style="symbols">
-           <t>New RIB and FIB entries are created if no label was allocated to &lt;COLOR,DESTINATION> previously.</t>
-           <t>The RIB and FIB entries are modified if given path is best and active. (or 2nd to best and BGP PIC EDGE is enabled)</t>
-           <t>The RIB entry is modified if given path is best.</t>
-         </list></t>
-       </list></t>
+       <t>Whenever BGP path to &lt;COLOR,DESTINATION> is re-advertised and BGP Next Hop attribute is changed, the label(s) portion of NLRI is modified. This specification defines alternative procedures of this opertion - option "A" and option "B" described below. The choice of option is a matter of network design. If implementation support both option, local configuration of BGP speaker MUST allow for selecting one on per BGP session granularity. Implementation MAY support more granular selection, e.g. on per path basis action in BGP routing policy.</t>
+       <section title="BGP NH change procedure option A">
+         <t>On the Next-Hop-change the BGP speaker replaces all label(s) in NLRI by single local label. The local label identifies &lt;COLOR, DESTINATION>. The value of local labels is derived as described in chapter 6.6. </t>
+         <t>Any BGP speaker supporting LABELED-COLORED-UNICAST (SAFI=[[TBD]]) MUST support above behavior on Next-hop-change.</t>
+         <t>Please note:</t>
+         <t><list style="symbols">
+           <t>This operation does not create &lt;COLOR,DESTINATION> entry in RIB.</t>
+           <t>This operation does not create any IP RIB entry.</t>
+           <t>This operation does not create any IP entry in FIB</t>
+           <t>This operation may create or modify MPLS entry in RIB and FIB.
+             <list style="symbols">
+               <t>New RIB and FIB entries are created if no label was allocated to &lt;COLOR,DESTINATION> previously.</t>
+               <t>The RIB and FIB entries are modified if given path is best and active. (or 2nd to best and BGP PIC EDGE is enabled)</t>
+               <t>The RIB entry is modified if given path is best.</t>
+             </list></t>
+           </list></t>
+         </section>
+         <section title="BGP NH change procedure option B">
+           <t>On the Next-Hop-change the BGP speaker prepends all label(s) in NLRI by single local label. The local label identifies tunnel(s) used bg BGP speaker for resolution of learned BGP NH attribute of given path. Please note that this tunnel is represented in RIB as &lt;COLOR,NEXT_HOP_IP>.The value of local labels is derived as described in chapter 6.7. </t>
+           <t>Please note that in case BGP NH is resolved by multiple tunnels (the ECMP case), all tunnels MUST be indetified by same label value</t>
+           <t>The BGP speaker supporting LABELED-COLORED-UNICAST (SAFI=[[TBD]]) MAY support above behavior on Next-hop-change.</t>
+           <t>Please note:</t>
+           <t><list style="symbols">
+             <t>This operation does not create &lt;COLOR,DESTINATION> entry in RIB.</t>
+             <t>This operation does not create any IP RIB entry.</t>
+             <t>This operation does not create any IP entry in FIB</t>
+             <t>This operation may create or modify MPLS entry in RIB and FIB.
+               <list style="symbols">
+                 <t>New RIB and FIB entries are created if no label was allocated to &lt;COLOR,NEXT_HOP_IP> previously.</t>
+                 <t>The RIB and FIB entries are modified if given path is best and active. (or 2nd to best and BGP PIC EDGE is enabled)</t>
+                 <t>The RIB entry is modified if given path is best.</t>
+               </list></t>
+             </list></t>
+           </section>
      </section>
      <section title="Advertising BGP-LCU over iBGP session when BGP NH remain unchanged.">
        <t>Whenever BGP path to &lt;COLOR,DESTINATION> is re-advertised but BGP Next-Hop attribute remains unchanged, the label(s) portion of NLRI MUST NOT be modified.</t>
      </section>
-     <section title="Label value assignment procedure">
+     <section title="Label value assignment procedure for Option A">
        <t>The selection of local label value MUST follow below procedure.</t>
        <t><list style="numbers">
          <t>If BGP speaker is provided (e.g. by local configuration) with explicit label value binding for given &lt;COLOR, DESTINATION>, it SHOULD be honored and used.</t>
@@ -451,19 +471,33 @@ TE-domain      TE-domain      TE-domain
        </list></t>
        <t>Please note that above procedure could result with local label value shared among multiple &lt;COLOR,DESTINATION> prefixes, or unique label value for each  &lt;COLOR,DESTINATION>. It depends on particular network scenario and both possibilities are valid and legitimate.</t>
      </section>
+     <section title="Label value assignment procedure for Option B">
+       <t>The selection of local label value MUST follow below procedure.</t>
+       <t><list style="numbers">
+         <t>If BGP speaker is provided (e.g. by local configuration) with explicit label value binding for given &lt;COLOR, BGP_NH_IP>, it SHOULD be honored and used.</t>
+         <t>If Binding SID (BSID) as per Segment Routing Architecture <xref target="RFC8402"/> is assigned to &lt;COLOR, BGP_NH_IP> tunnel, then local label SHOULD be set to be equal to BSID value.</t>
+         <t>If &lt;COLOR, BGP_NH_IP> tunnel is instantiated as result of processing prefixSID, then this BGP speaker SHOULD allocate local label form it's SRGB <xref target="RFC8402"/>.</t>
+         <t>If, given BGP speaker has local label already allocated for given &lt;COLOR, BGP_NH_IP> as result of processing earlier routing events, this same value MUST be used.</t>
+         <t>Else, BGP speaker allocates label from free labels of it's dynamic label block.</t>
+       </list></t>
+       <t>Please note that above procedure could result with local label value shared among multiple &lt;COLOR,DESTINATION> prefixes, what is expected and desired scenario.</t>
+     </section>
    </section>
    <section title="Deployment and Operation Consideration">
      <section title="Building label stack">
        <section title="Purpose of multiple-label stack">
          <t>Due to potential large scale of colored prefixes, the BGP-LCU speaker may run out of label space, if 1:1 relationship between &lt;COLOR:DESTINATION> and local label would be established. </t>
-         <t>Sharing label among multiple &lt;COLOR:DESTINATION> prefixes could be not always possible and reduction of needed labels is hard to predict and is changing together with intra-domain tunnels path changes.</t>
+         <t>Sharing label among multiple &lt;COLOR:DESTINATION> prefixes could be not always possible and reduction of needed labels is hard to predict as it is changing together with intra-domain tunnels path changes.</t>
          <t>To predictably address this scaling challenge, the topmost label of packet incoming on ASBR/ABR shall represents immediate downstream intra-domain tunnel in the connected TE-domain rather than entire end-to-end path. Consequently, ingress PE need to push appropriate label stack on outgoing data packets.</t>
          <t>This chapter describes how BGP-LCU could be configured and used on various nodes of multi-domain network system to instruct ingress PE to build and push label stack onto outgoing packets.</t>
-         <t>If network scale, in terms of number of DESTINATIONS and COLORS, do not requires usage of label stack, it is perfectly valid design to simply swap label in NLRI on every domain border and use one label on ingress PE for inter-TE-domain tunnel.
+         <t>If network scale, in terms of number of DESTINATIONS and COLORS, do not requires usage of label stack, it is perfectly valid design to simply swap label in NLRI (as per chapter 6.4.1) on every domain border and use one label on ingress PE for inter-TE-domain tunnel.
          </t>
        </section>
+       <section title="Expanding label sequence in NLRI on BGP border">
+
+       </section>
        <section title="Ingress recursive resolution">
-         <t>The Recursive resolution of BGP-LCU NH attributes on ingress PE provides ability to construct label stack and relief transit BGP speakers (ASBRs and ABRs)label space pressure. Recursive resolution is matter of network design and ingress PE capability and is inherently supported by BGP-LCU.</t>
+         <t>The Recursive resolution of BGP-LCU NH attributes on ingress PE provides ability to construct label stack and relief transit BGP speakers (ASBRs and ABRs)label space pressure, even if BGP-LCU NLRI carry only single label (see chapter 6.4.1). Recursive resolution is matter of network design and ingress PE capability and is inherently supported by BGP-LCU.</t>
          <t>The below description is provided to the reader for convenience.</t>
          <t>To provide ingress PE with sufficient information for building and pushing label stack onto packet, in addition to signal path for every &lt;COLOR,EGRESS-PE> combination, would require signaling (in BGP-LCU) also path for &lt;COLOR,ASBR/ABR> combination. Please note that typically number of ASBRs/ABRs is two or three orders of magnitude lower than PEs. Also, note that if given node is ASBR and PE, is should not be double-counted. Therefor impact on BGP-LCU path scale is expected to be &lt; 1%. and therefore negligible.</t>
          <t>Please note that when BGP-LCU path is re-advertised to another BGP-LCU session, BGP Next-Hop attribute is changed, or not, according to following rules. This rules do not represent default BGP behavior but could be implemented via local configuration of BGP speaker.</t>
