@@ -52,7 +52,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-szarecki-idr-bgp-lcu-traffic-steering-00" ipr="trust200902">
+<rfc category="std" docName="draft-szarecki-idr-bgp-lcu-traffic-steering-01" ipr="trust200902">
  <!-- category values: std, bcp, info, exp, and historic
     ipr values: trust200902, noModificationTrust200902, noDerivativesTrust200902,
        or pre5378Trust200902
@@ -209,8 +209,10 @@ TE-domain      TE-domain      TE-domain
      </section>
      <section title="COLOR name spaces">
        <t>The concept of COLOR as defined above is not specific to inter-domain network slicing, and it actually was introduced in <xref target="I-D.ietf-spring-segment-routing-policy"/> and is used by SR-TE and SR IGP FlexAlgo (called there algorithm) in scope of single TE-domain.</t>
-       <t>Authors recognizes possibility that color-code values used inside given TE-domain may be not the same as agreed between TE-domains. Furthermore, it is possible that same color value is mapped to different T-intents inside TE-domain and for inter-TE-domain context.</t>
-       <t>It is recommended for network designers to adjust both color-code schemas to be identical in order to simplify operation. It is assumed in this specification, that color-code schema used for inter-TE-domain as well in each TE-domain is identical</t>
+       <t>Authors recognizes possibility that color-code values used inside given TE-domain may be not the same as agreed between TE-domains. Furthermore, it is possible that same color value is mapped to different T-intents inside TE-domain and for inter-TE-domain context. This situation we called "color conflict type A" for further references in this document.</t>
+       <t>Authors recognizes also possibility that color-code values used by given set of TE-domains may be not the same as agreed between other set of TE-domains, and this sets could overlap. Furthermore, it is possible that same color value is mapped to different T-intents in each set of cooperating TE-domains. This situation we called "color conflict type B" for further references in this document.</t>
+       <t>It is recommended for network designers to avoid color conflicta and adjust both color-code schemas to be identical in order to simplify operation. Section ___ below describes techniques used to managed color conflit of type A. Section ___ below describes techniques used to managed color conflit of type B.</t>
+       <!--<t> It is assumed in this specification, that color-code schema used for inter-TE-domain as well in each TE-domain is identical.</t>-->
      </section>
    </section>
    <section title="Scaling Consideration">
