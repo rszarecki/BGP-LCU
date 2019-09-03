@@ -519,8 +519,8 @@ TE-domain      TE-domain      TE-domain
            <c>A</c> <c>B</c> <c>[L1 ,&lt;red,I>]</c> <c>A</c> <c></c> <c>Node A insetrts &lt;red,I> into BGP-LCU from other protoicol or family</c>
            <c>B</c> <c>C</c> <c>[L2 L1 ,&lt;red,I>]</c> <c>B</c> <c>[AS1]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</xref></c>
            <c>C</c> <c>D</c> <c>[L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</xref></c>
-           <c>D</c> <c>E</c> <c>[L4 L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</c>
-           <c>E</c> <c>Z</c> <c>[L5 L4 L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</c>
+           <c>D</c> <c>E</c> <c>[L4 L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</xref></c>
+           <c>E</c> <c>Z</c> <c>[L5 L4 L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</xref></c>
          </texttable>
          <t>The <xref target="table_3"/> below shows RIB entry on node "Z" after recursive resolution</t>
          <texttable anchor="table_3" title="Ingress label stack build - RIB entry">
