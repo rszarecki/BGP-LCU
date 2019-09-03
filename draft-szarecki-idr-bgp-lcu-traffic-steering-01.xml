@@ -529,7 +529,7 @@ TE-domain      TE-domain      TE-domain
            <ttcol align="center">egress interface</ttcol>
            <c>&lt;red,I></c> <c>push: L5, L4, L3, L2, L1, [red-tunnel-to-E]</c> <c> X</c>
          </texttable>
-         <t>Please note that resulting label stack depth could be reduced id one of intermediate ASBRs (e.g. ASBR "C") would be configured to execute <xref target="Option_A">"Option A" procedure on Next-Hop-change. </t>
+         <t>Please note that resulting label stack depth could be reduced id one of intermediate ASBRs (e.g. ASBR "C") would be configured to execute <xref target="Option_A">"Option A"</xref> procedure on Next-Hop-change. </t>
          <t>The above described method allows to build label stack on ingress PE, thus address high scale of &lt;COLOR,DESTINATION> prefix while reducing data-plane states on domains border nodes.</t>
        </section>
        <section title="Ingress recursive resolution">
@@ -544,12 +544,6 @@ TE-domain      TE-domain      TE-domain
            <t>In every other case, including re-advertising to eBGP sessions, BGP-LCU Next-Hop attribute, and consequently label(s) sequence in NLRI, should stay unmodified.</t>
          </list></t>
          <t>Example below (<xref target="fig_6"/>) shows BGP-LCU update flow across domains. The BGP Next-Hop attribute manipulation and resolution are also shown in <xref target="table_2"/>. Finally, MPLS FIB entries are also displayed.</t>
-         <!--
-         <figure align="center" anchor="fig_6">
-           <artwork align="left"><![CDATA[ -->
-<!--               ]]></artwork>
-               <postamble>Label stack build on ingress - topology</postamble>
-             </figure> -->
          <t>The <xref target="table_4"/> below, shows flow BGP-LCU Updates for DESTINATION "I"</t>
          <texttable anchor="table_4" title="COLOR code schema - intra- and inter-TE-domain">
            <ttcol align="center">From</ttcol>
@@ -622,7 +616,7 @@ TE-domain      TE-domain      TE-domain
 
    <section anchor="IANA" title="IANA Considerations">
      <t>This document defines a new SAFI in the registry "Subsequent Address Family Identifiers (SAFI) Parameters" that has been assigned by IANA:</t>
-     <texttable anchor="table_4" title="">
+     <texttable anchor="table_6" title="">
        <ttcol align="center">Codepoint</ttcol>
        <ttcol align="center">Description</ttcol>
        <ttcol align="center">Reference</ttcol>
@@ -631,8 +625,7 @@ TE-domain      TE-domain      TE-domain
    </section>
 
    <section anchor="Security" title="Security Considerations">
-     <t>The security considerations of BGP (as specified in BGP-4 <xref
-     target="RFC4271"/>) apply.</t>
+     <t>The security considerations of BGP (as specified in BGP-4 <xref target="RFC4271"/>) apply.</t>
      <t>This document specifies that certain data packets be "tunneled" from one BGP speaker to another across single TE-domain.  This requires that the packets be encapsulated while in flight.  This document does not specify the encapsulation to be used, except it need to be able to carry MPLS packet as payload.  However, if a particular encapsulation is used, the security considerations of that encapsulation are applicable.
      </t>
      <t>If a particular intra-TE-domain tunnel encapsulation does not provide integrity and authentication, it is possible that a data packet's label stack can be modified, through error or malfeasance, while the packet is in flight.  This can result in misdelivery of the packet. It should be that the tunnel encapsulation (MPLS), expected to be most commonly used in deployments of this specification, does not provide integrity or authentication.
