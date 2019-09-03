@@ -494,19 +494,7 @@ TE-domain      TE-domain      TE-domain
          </t>
        </section>
        <section title="Expanding label sequence in NLRI on BGP border">
-         <t>The procedure of modification label(s) sequence in BGP-LCU NLRI described in <xref target="Option_B">"Option B"</xref> is specifically designed to build labels stack in network control plane, as BGP-LCU path update propagates across domain border. As result, ingress node would learn &lt;COLOR,DESTINATION> prefixes with label stack needed to deliver traffic to DESTINATION, with desred treatment (T-intent), across all downstream domains.</t>
-       </section>
-       <section title="Ingress recursive resolution">
-         <t>Since procedure described in  <xref target="Option_B">"Option B"</xref> is optional for BGP-LCU implementation, this chapter provides description of techniques that allows biuld label stack, and address scale challanges as described above, when BGP-LCU speakers are configured in such a way that only single label is carried in NLRI (perform label manipulation as described in <xref target="Option_A">"Option A"</xref></t>
-         <t>The Recursive resolution of BGP-LCU Next-Hop attribute on ingress PE provides ability to construct label stack and relief transit BGP speakers (ASBRs and ABRs)label space pressure, even if BGP-LCU NLRI carry only single label (see chapter 6.4.1). Recursive resolution is matter of network design and ingress PE capability and is inherently supported by BGP-LCU.</t>
-         <t>The below description is provided to the reader for convenience.</t>
-         <t>To provide ingress PE with sufficient information for building and pushing label stack onto packet, in addition to signal path for every &lt;COLOR,EGRESS-PE> combination, would require signaling (in BGP-LCU) also path for &lt;COLOR,ASBR/ABR> combination. Please note that typically number of ASBRs/ABRs is two or three orders of magnitude lower than PEs. Also, note that if given node is ASBR and PE, is should not be double-counted. Therefor impact on BGP-LCU path scale is expected to be &lt; 1%. and therefore negligible.</t>
-         <t>Please note that when BGP-LCU path is re-advertised to another BGP-LCU session, BGP Next-Hop attribute is changed, or not, according to following rules. This rules do not represent default BGP behavior but could be implemented via local configuration of BGP speaker.</t>
-         <t><list style="numbers">
-           <t>If path is advertised to eBGP and has AS-PATH empty, then BGP Next-Hop attribute MUST be changed. This is default BGP behavior.</t>
-           <t>If path is learned from eBGP from AS that originated &lt;COLOR,DESTINATION> prefix (is last on AS-PATH), then Next-Hop attribute should be changed. This is observed common practice to change BGP Next-Hop attribute to self in this scenario.</t>
-           <t>In every other case, including re-advertising to eBGP sessions, BGP-LCU Next-Hop attribute, and consequently label(s) sequence in NLRI, should stay unmodified.</t>
-         </list></t>
+         <t>The procedure of modification label(s) sequence in BGP-LCU NLRI described in <xref target="Option_B">"Option B"</xref> is specifically designed to build labels stack in network control plane, as BGP-LCU path update propagates across domain border. As result, ingress node would learn &lt;COLOR,DESTINATION> prefixes with label stack needed to deliver traffic to DESTINATION, with desired treatment (T-intent), across all downstream domains.</t>
          <t>Example below (<xref target="fig_6"/>) shows BGP-LCU update flow across domains. The BGP Next-Hop attribute manipulation and resolution are also shown in <xref target="table_2"/>. Finally, MPLS FIB entries are also displayed.</t>
          <figure align="center" anchor="fig_6">
            <artwork align="left"><![CDATA[
@@ -518,7 +506,7 @@ TE-domain      TE-domain      TE-domain
  '+'     '-'      '-'    '-'    '-'    '-'     '+'
   +------+ +------+        +------+      +------+
                ]]></artwork>
-               <postamble>Label stack build on ingress - topology</postamble>
+               <postamble>Label stack build - example topology</postamble>
              </figure>
          <t>The <xref target="table_2"/> below, shows flow BGP-LCU Updates for DESTINATION "I"</t>
          <texttable anchor="table_2" title="COLOR code schema - intra- and inter-TE-domain">
@@ -527,16 +515,59 @@ TE-domain      TE-domain      TE-domain
            <ttcol align="center">NLRI</ttcol>
            <ttcol align="center">BGP NH</ttcol>
            <ttcol align="center">AS-path</ttcol>
-           <c>A</c> <c>B</c> <c>[L1 ,&lt;red,I>]</c> <c>A</c> <c></c>
-           <c>B</c> <c>C</c> <c>[L1' ,&lt;red,I>]</c> <c>B</c> <c>[AS1]</c>
-           <c>C</c> <c>D</c> <c>[L1",&lt;red,I>]</c> <c>C</c> <c>[AS1]</c>
-           <c>D</c> <c>E</c> <c>[L1" ,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c>
-           <c></c> <c></c> <c>[L2 ,&lt;red,C>]</c> <c>E</c> <c>[AS2]</c>
-           <c>E</c> <c>Z</c> <c>[L1",&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c>
-           <c></c> <c></c> <c>[L2',&lt;red,C>]</c> <c>E</c> <c>[AS2]</c>
+           <ttcol align="center">Note</ttcol>
+           <c>A</c> <c>B</c> <c>[L1 ,&lt;red,I>]</c> <c>A</c> <c></c> <c>Node A insetrts &lt;red,I> into BGP-LCU from other protoicol or family</c>
+           <c>B</c> <c>C</c> <c>[L2 L1 ,&lt;red,I>]</c> <c>B</c> <c>[AS1]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</xref></c>
+           <c>C</c> <c>D</c> <c>[L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</xref></c>
+           <c>D</c> <c>E</c> <c>[L4 L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</c>
+           <c>E</c> <c>Z</c> <c>[L5 L4 L3 L2 L1,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>prepending label sequence as per <xref target="Option_B">"Option B"</c>
          </texttable>
          <t>The <xref target="table_3"/> below shows RIB entry on node "Z" after recursive resolution</t>
          <texttable anchor="table_3" title="Ingress label stack build - RIB entry">
+           <ttcol align="center">Prefix/key</ttcol>
+           <ttcol align="center">encap. operation</ttcol>
+           <ttcol align="center">egress interface</ttcol>
+           <c>&lt;red,I></c> <c>push: L5, L4, L3, L2, L1, [red-tunnel-to-E]</c> <c> X</c>
+         </texttable>
+         <t>Please note that resulting label stack depth could be reduced id one of intermediate ASBRs (e.g. ASBR "C") would be configured to execute <xref target="Option_A">"Option A" procedure on Next-Hop-change. </t>
+         <t>The above described method allows to build label stack on ingress PE, thus address high scale of &lt;COLOR,DESTINATION> prefix while reducing data-plane states on domains border nodes.</t>
+       </section>
+       <section title="Ingress recursive resolution">
+         <t>Since above procedure requires modification of label sequence in NLRI as described in  <xref target="Option_B">"Option B"</xref>, which is optional for BGP-LCU implementation, this chapter provides description of techniques that allows biuld label stack, and address scale challanges, when BGP-LCU speakers do not supports Next-Hop-change <xref target="Option_B">"Option B"</xref> procedure. It is sufficient for BGP speakers to support only single label carried in NLRI (perform label manipulation as described in <xref target="Option_A">"Option A"</xref></t>).
+         <t>The Recursive resolution of BGP-LCU Next-Hop attribute on ingress PE provides ability to construct label stack and relief transit BGP speakers (ASBRs and ABRs)label space pressure, even if BGP-LCU NLRI carry only single label (see chapter 6.4.1). Recursive resolution is matter of network design and ingress PE capability and is inherently supported by BGP-LCU.</t>
+         <t>The below description is provided to the reader for convenience.</t>
+         <t>To provide ingress PE with sufficient information for building and pushing label stack onto packet, in addition to signal path for every &lt;COLOR,EGRESS-PE> combination, would require signaling (in BGP-LCU) also path for &lt;COLOR,ASBR/ABR> combination. Please note that typically number of ASBRs/ABRs is two or three orders of magnitude lower than PEs. Also, note that if given node is ASBR and PE, is should not be double-counted. The impact on BGP-LCU path scale is expected to be &lt; 1%, and therefore negligible.</t>
+         <t>Please note that when BGP-LCU path is re-advertised to another BGP-LCU session, BGP Next-Hop attribute is changed, or not, according to following rules. This rules do not represent default BGP behavior but could be implemented via local configuration of BGP speaker.</t>
+         <t><list style="numbers">
+           <t>If path is advertised to eBGP and has AS-PATH empty, then BGP Next-Hop attribute MUST be changed. This is default BGP behavior.</t>
+           <t>If path is learned from eBGP from AS that originated &lt;COLOR,DESTINATION> prefix (is last on AS-PATH), then Next-Hop attribute should be changed. This is observed common practice to change BGP Next-Hop attribute to self in this scenario.</t>
+           <t>In every other case, including re-advertising to eBGP sessions, BGP-LCU Next-Hop attribute, and consequently label(s) sequence in NLRI, should stay unmodified.</t>
+         </list></t>
+         <t>Example below (<xref target="fig_6"/>) shows BGP-LCU update flow across domains. The BGP Next-Hop attribute manipulation and resolution are also shown in <xref target="table_2"/>. Finally, MPLS FIB entries are also displayed.</t>
+         <!--
+         <figure align="center" anchor="fig_6">
+           <artwork align="left"><![CDATA[ -->
+<!--               ]]></artwork>
+               <postamble>Label stack build on ingress - topology</postamble>
+             </figure> -->
+         <t>The <xref target="table_4"/> below, shows flow BGP-LCU Updates for DESTINATION "I"</t>
+         <texttable anchor="table_4" title="COLOR code schema - intra- and inter-TE-domain">
+           <ttcol align="center">From</ttcol>
+           <ttcol align="center">to</ttcol>
+           <ttcol align="center">NLRI</ttcol>
+           <ttcol align="center">BGP NH</ttcol>
+           <ttcol align="center">AS-path</ttcol>
+           <ttcol align="center">Note</ttcol>
+           <c>A</c> <c>B</c> <c>[L1 ,&lt;red,I>]</c> <c>A</c> <c></c> <c>Node A insetrts &lt;red,I> into BGP-LCU from other protoicol or family</c>
+           <c>B</c> <c>C</c> <c>[L1' ,&lt;red,I>]</c> <c>B</c> <c>[AS1]</c> <c>rule 1 above</c>
+           <c>C</c> <c>D</c> <c>[L1",&lt;red,I>]</c> <c>C</c> <c>[AS1]</c> <c> rule 2 above</c>
+           <c>D</c> <c>E</c> <c>[L1" ,&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>rule 3 above</c>
+           <c></c> <c></c> <c>[L2 ,&lt;red,C>]</c> <c>E</c> <c>[AS2]</c> <c>Node D insetrts &lt;red,C> into BGP-LCU from other protoicol or family</c>
+           <c>E</c> <c>Z</c> <c>[L1",&lt;red,I>]</c> <c>C</c> <c>[AS1 AS2]</c> <c>rule 3 above</c>
+           <c></c> <c></c> <c>[L2',&lt;red,C>]</c> <c>E</c> <c>[AS2]</c> <c>rule 2 above</c>
+         </texttable>
+         <t>The <xref target="table_5"/> below shows RIB entry on node "Z" after recursive resolution</t>
+         <texttable anchor="table_5" title="Ingress label stack build - RIB entry">
            <ttcol align="center">Prefix/key</ttcol>
            <ttcol align="center">encap. operation</ttcol>
            <ttcol align="center">egress interface</ttcol>
@@ -556,7 +587,7 @@ TE-domain      TE-domain      TE-domain
        </list></t>
        <t>Authors of this document acknowledges that currently there is equipment in field and in development, that have limited capability in pushing deep label stack (Legacy-PE).</t>
        <t>To support such devices in ingress role, egress ASBR/ABR (node "E" on <xref target="fig_6"/>) of ingress TE-DOMAIN comprising such PE (node "Z" on <xref target="fig_6"/>)have to "reduce" stack depth.</t>
-       <t>Provided that egress ASBR (node "E") learns all BGP-LCU &lt;COLOR,DESTINATION> prefixes, it advertises this BGP-LCU path to iBGP session toward (set of) ingress Legacy-PE, with BGP Next-Hop attribute change to self and label modification as per <xref target="Option_A">"Option A"</xref>. As result, path would be re-advertised with only one label. This reduce required label push depth on legacy ingress PE.</t>
+       <t>Provided that egress ASBR (node "E") learns all BGP-LCU &lt;COLOR,DESTINATION> prefixes, it advertises these BGP-LCU paths over iBGP session toward (set of) ingress Legacy-PE, with BGP Next-Hop attribute change to self and label modification as per <xref target="Option_A">"Option A"</xref>. As result, paths would be re-advertised with only one label. This reduce required label push depth on legacy ingress PE.</t>
        <t>In the very high scale environment, by doing above, egress ASBR/ABR would consume large number of labels. Therefore, network designer needs to take this into consideration and if needed take appropriate action, which could be for example:</t>
        <t><list style="symbols">
          <t>filter colored prefixes that are send to (all) legacy ingress PEs to smaller subset. This technique is specifically effective if ingress PEs are part of backhaul solution and provide transport to limited set of centralized service-aware nodes (vEPC, BNG, Video caches)</t>
