@@ -527,7 +527,7 @@ TE-domain      TE-domain      TE-domain
            <ttcol align="center">Prefix/key</ttcol>
            <ttcol align="center">encap. operation</ttcol>
            <ttcol align="center">egress interface</ttcol>
-           <c>&lt;red,I></c> <c>push: L5, L4, L3, L2, L1, [red-tunnel-to-E]</c> <c> X</c>
+           <c>&lt;red,I></c> <c>push: L1, L2, L3, L4, L5, [red-tunnel-to-E]</c> <c> X</c>
          </texttable>
          <t>Please note that resulting label stack depth could be reduced id one of intermediate ASBRs (e.g. ASBR "C") would be configured to execute <xref target="Option_A">"Option A"</xref> procedure on Next-Hop-change. </t>
          <t>The above described method allows to build label stack on ingress PE, thus address high scale of &lt;COLOR,DESTINATION> prefix while reducing data-plane states on domains border nodes.</t>
