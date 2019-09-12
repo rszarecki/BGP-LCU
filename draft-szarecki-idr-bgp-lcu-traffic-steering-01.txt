@@ -99,7 +99,7 @@ Table of Contents
      6.6.  Label value assignment procedure for Option A . . . . . .  15
      6.7.  Label value assignment procedure for Option B . . . . . .  15
    7.  Deployment and Operation Consideration  . . . . . . . . . . .  16
-     7.1.  Building label stack  . . . . . . . . . . . . . . . . . .  17
+     7.1.  Building label stack  . . . . . . . . . . . . . . . . . .  16
        7.1.1.  Purpose of multiple-label stack . . . . . . . . . . .  17
        7.1.2.  Expanding label sequence in NLRI on BGP border  . . .  17
        7.1.3.  Ingress recursive resolution  . . . . . . . . . . . .  19
@@ -827,12 +827,12 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
    The selection of local label value MUST follow below procedure.
 
-   1.  If Next-Hop attribute of learned BGP-LCU path is local (belongs
-       to directly connected neighbour)
+   o  If Next-Hop attribute of learned BGP-LCU path is local (belongs to
+      directly connected neighbor)
 
-   2.
-
-
+      1.  If BGP speaker is provided (e.g. by local configuration) with
+          explicit local label value bound address on BGP-LCU Next-Hop
+          attribute, it SHOULD be honored and used.
 
 
 
@@ -842,49 +842,49 @@ Chan & Szarecki          Expires March 15, 2020                [Page 15]
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
-       1.  If BGP speaker is provided (e.g. by local configuration) with
-           explicit local label value bound address on BGP-LCU Next-Hop
-           attribute, it SHOULD be honored and used.
+      2.  If Peer Adjacency SID (PeerAdjSID) as per Segment Routing
+          Centralized BGP Egress Peer Engineering
+          [I-D.ietf-spring-segment-routing-central-epe] is assigned to
+          external session, given BGP-LCU path was learned from, then
+          local label SHOULD be set to be equal to PeerAdjSID value.
 
-       2.  If Peer Adjacency SID (PeerAdjSID) as per Segment Routing
-           Centralized BGP Egress Peer Engineering
-           [I-D.ietf-spring-segment-routing-central-epe] is assigned to
-           session given BGP-LCU path was learned from, then local label
-           SHOULD be set to be equal to PeerAdjSID value.
+      3.  If, given BGP speaker has local label already allocated for
+          Next-Hop attribute of given BGP-LCU path, as result of
+          processing earlier routing events, this same value MUST be
+          used.
 
-       3.  TBD
+      4.  Else, BGP speaker allocates label from free labels of it's
+          dynamic label block.
 
-       4.  TBD
+   o  If Next-Hop attribute of learned BGP-LCU path is remote
 
-   3.  If Next-Hop attribute of learned BGP-LCU path is remote
+      1.  If BGP speaker is provided (e.g. by local configuration) with
+          same, single, explicit local label value bound to all
+          resolving tunnel(s), it SHOULD be honored and used.
 
-   4.
+      2.  If Binding SID (BSID) as per Segment Routing Architecture
+          [RFC8402] is assigned to all resolving tunnel(s), then local
+          label SHOULD be set to be equal to BSID value.
 
-       1.  If BGP speaker is provided (e.g. by local configuration) with
-           same, single, explicit local label value bound to all
-           resolving tunnel(s), it SHOULD be honored and used.
+      3.  If resolving tunnel is instantiated as result of processing
+          prefixSID, then this BGP speaker SHOULD allocate local label
+          form it's SRGB [RFC8402].
 
-       2.  If Binding SID (BSID) as per Segment Routing Architecture
-           [RFC8402] is assigned to all resolving tunnel(s), then local
-           label SHOULD be set to be equal to BSID value.
+      4.  If, given BGP speaker has local label already allocated for
+          all resolution tunnels of given BGP-LCU path, as result of
+          processing earlier routing events, this same value MUST be
+          used.
 
-       3.  If resolving tunnel is instantiated as result of processing
-           prefixSID, then this BGP speaker SHOULD allocate local label
-           form it's SRGB [RFC8402].
-
-       4.  If, given BGP speaker has local label already allocated for
-           all resolution tunnels of given BGP-LCU path, as result of
-           processing earlier routing events, this same value MUST be
-           used.
-
-       5.  Else, BGP speaker allocates label from free labels of it's
-           dynamic label block.
+      5.  Else, BGP speaker allocates label from free labels of it's
+          dynamic label block.
 
    Please note that above procedure could result with local label value
    shared among multiple <COLOR,DESTINATION> prefixes, what is expected
    and desired scenario.
 
 7.  Deployment and Operation Consideration
+
+7.1.  Building label stack
 
 
 
@@ -897,8 +897,6 @@ Chan & Szarecki          Expires March 15, 2020                [Page 16]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
-
-7.1.  Building label stack
 
 7.1.1.  Purpose of multiple-label stack
 
@@ -938,6 +936,8 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
    Example below (Figure 6) shows BGP-LCU update flow across domains.
    The BGP Next-Hop attribute manipulation and resolution are also shown
    in Table 2.  Finally, MPLS FIB entries are also displayed.
+
+
 
 
 

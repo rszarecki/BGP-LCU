@@ -477,16 +477,16 @@ TE-domain      TE-domain      TE-domain
      </section>
      <section title="Label value assignment procedure for Option B">
        <t>The selection of local label value MUST follow below procedure.</t>
-       <t><list style="numbers">
-         <t>If Next-Hop attribute of learned BGP-LCU path is local (belongs to directly connected neighbour)</t>
-         <t><list style="numbers">
+       <t><list style="symbols">
+         <t>If Next-Hop attribute of learned BGP-LCU path is local (belongs to directly connected neighbor)
+           <list style="numbers">
            <t>If BGP speaker is provided (e.g. by local configuration) with explicit local label value bound address on BGP-LCU Next-Hop attribute, it SHOULD be honored and used.</t>
-           <t>If Peer Adjacency SID (PeerAdjSID) as per Segment Routing Centralized BGP Egress Peer Engineering <xref target="I-D.ietf-spring-segment-routing-central-epe"/> is assigned to session given BGP-LCU path was learned from, then local label SHOULD be set to be equal to PeerAdjSID value.</t>
-           <t>TBD</t>
-           <t>TBD</t>
+           <t>If Peer Adjacency SID (PeerAdjSID) as per Segment Routing Centralized BGP Egress Peer Engineering <xref target="I-D.ietf-spring-segment-routing-central-epe"/> is assigned to external session, given BGP-LCU path was learned from, then local label SHOULD be set to be equal to PeerAdjSID value.</t>
+           <t>If, given BGP speaker has local label already allocated for Next-Hop attribute of given BGP-LCU path, as result of processing earlier routing events, this same value MUST be used.</t>
+           <t>Else, BGP speaker allocates label from free labels of it's dynamic label block.</t>
          </list></t>
-         <t>If Next-Hop attribute of learned BGP-LCU path is remote</t>
-         <t><list style="numbers">
+         <t>If Next-Hop attribute of learned BGP-LCU path is remote
+           <list style="numbers">
            <t>If BGP speaker is provided (e.g. by local configuration) with same, single, explicit local label value bound to all resolving tunnel(s), it SHOULD be honored and used.</t>
            <t>If Binding SID (BSID) as per Segment Routing Architecture <xref target="RFC8402"/> is assigned to all resolving tunnel(s), then local label SHOULD be set to be equal to BSID value.</t>
            <t>If resolving tunnel is instantiated as result of processing prefixSID, then this BGP speaker SHOULD allocate local label form it's SRGB <xref target="RFC8402"/>.</t>
