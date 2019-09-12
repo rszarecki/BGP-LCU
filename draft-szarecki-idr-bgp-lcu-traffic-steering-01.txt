@@ -5,7 +5,7 @@
 IDR Working Group                                                L. Chan
 Internet-Draft                                          R. Szarecki, Ed.
 Intended status: Standards Track                        Juniper Networks
-Expires: March 12, 2020                                September 9, 2019
+Expires: March 15, 2020                               September 12, 2019
 
 
 Inter-Domain Traffic Steering with BGP Labeled Colored Unicast (BGP-LCU)
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 12, 2020.
+   This Internet-Draft will expire on March 15, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 1]
+Chan & Szarecki          Expires March 15, 2020                 [Page 1]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -95,31 +95,31 @@ Table of Contents
        6.4.1.  BGP Next-Hop change procedure option A  . . . . . . .  14
        6.4.2.  BGP Next-Hop change procedure option B  . . . . . . .  14
      6.5.  Advertising BGP-LCU over iBGP session when BGP Next-Hop
-           remain unchanged. . . . . . . . . . . . . . . . . . . . .  14
+           remain unchanged. . . . . . . . . . . . . . . . . . . . .  15
      6.6.  Label value assignment procedure for Option A . . . . . .  15
      6.7.  Label value assignment procedure for Option B . . . . . .  15
    7.  Deployment and Operation Consideration  . . . . . . . . . . .  16
-     7.1.  Building label stack  . . . . . . . . . . . . . . . . . .  16
-       7.1.1.  Purpose of multiple-label stack . . . . . . . . . . .  16
-       7.1.2.  Expanding label sequence in NLRI on BGP border  . . .  16
-       7.1.3.  Ingress recursive resolution  . . . . . . . . . . . .  18
+     7.1.  Building label stack  . . . . . . . . . . . . . . . . . .  17
+       7.1.1.  Purpose of multiple-label stack . . . . . . . . . . .  17
+       7.1.2.  Expanding label sequence in NLRI on BGP border  . . .  17
+       7.1.3.  Ingress recursive resolution  . . . . . . . . . . . .  19
      7.2.  Handling BGP-LCU ingress PEs with limited label
-           imposition depth capabilities . . . . . . . . . . . . . .  20
-   8.  Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  21
+           imposition depth capabilities . . . . . . . . . . . . . .  21
+   8.  Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  22
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 2]
+Chan & Szarecki          Expires March 15, 2020                 [Page 2]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  21
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  22
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  23
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  23
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  24
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  23
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  24
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
 
 1.  Introduction
 
@@ -165,7 +165,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 3]
+Chan & Szarecki          Expires March 15, 2020                 [Page 3]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -221,7 +221,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 4]
+Chan & Szarecki          Expires March 15, 2020                 [Page 4]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -277,7 +277,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 5]
+Chan & Szarecki          Expires March 15, 2020                 [Page 5]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -333,7 +333,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 6]
+Chan & Szarecki          Expires March 15, 2020                 [Page 6]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -389,7 +389,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 7]
+Chan & Szarecki          Expires March 15, 2020                 [Page 7]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -445,7 +445,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 8]
+Chan & Szarecki          Expires March 15, 2020                 [Page 8]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -501,7 +501,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                 [Page 9]
+Chan & Szarecki          Expires March 15, 2020                 [Page 9]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -557,7 +557,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 10]
+Chan & Szarecki          Expires March 15, 2020                [Page 10]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -613,7 +613,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 11]
+Chan & Szarecki          Expires March 15, 2020                [Page 11]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -669,7 +669,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 12]
+Chan & Szarecki          Expires March 15, 2020                [Page 12]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -725,7 +725,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 13]
+Chan & Szarecki          Expires March 15, 2020                [Page 13]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -756,13 +756,19 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 6.4.2.  BGP Next-Hop change procedure option B
 
    On the Next-Hop-change the BGP speaker prepends all label(s) in NLRI
-   by additional, single local label.  The local label identifies
-   resolving tunnel(s) used bg BGP speaker for resolution of learned BGP
-   Next-Hop attribute of given path.  Please note that this tunnel(s)
-   destination IP matches the BGP-LCU Next-Hop attribute (in sens of
-   longest-prefix-match) and tunnel(s) color encoding the same T-intent
-   as BGP-LCU path.  The value of local labels is derived as described
-   in chapter 6.7.
+   by additional, single local label.  The local label identifies:
+
+   1.  egress interface and L2 encapsulation necessery to deliver
+       traffic to those direct dowstream neighbour, for ceases when if
+       BGP NH attribute belongs to directly connected neighbour node
+       (eBGP)
+
+   2.  else, resolving tunnel(s) used by BGP speaker for resolution of
+       learned BGP Next-Hop attribute of given path.  Please note that
+       this tunnel(s) destination IP matches the BGP-LCU Next-Hop
+       attribute (in sens of longest-prefix-match) and tunnel(s) color
+       encoding the same T-intent as BGP-LCU path.  The value of local
+       labels is derived as described in chapter 6.7.
 
    In case BGP Next-Hop is resolved by multiple resolving tunnels (the
    ECMP case), all tunnels MUST be indetified by same label value
@@ -770,21 +776,22 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
    The BGP speaker supporting LABELED-COLORED-UNICAST (SAFI=[[TBD]]) MAY
    support above behavior on Next-hop-change.
 
+
+
+
+
+
+Chan & Szarecki          Expires March 15, 2020                [Page 14]
+
+Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
+
+
 6.5.  Advertising BGP-LCU over iBGP session when BGP Next-Hop remain
       unchanged.
 
    Whenever BGP path to <COLOR,DESTINATION> is re-advertised but BGP
    Next-Hop attribute remains unchanged, the label(s) portion of NLRI
    MUST NOT be modified.
-
-
-
-
-
-Chan & Szarecki          Expires March 12, 2020                [Page 14]
-
-Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
-
 
 6.6.  Label value assignment procedure for Option A
 
@@ -820,40 +827,76 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
    The selection of local label value MUST follow below procedure.
 
-   1.  If BGP speaker is provided (e.g. by local configuration) with
-       same, single, explicit local label value bound to all resolving
-       tunnel(s), it SHOULD be honored and used.
+   1.  If Next-Hop attribute of learned BGP-LCU path is local (belongs
+       to directly connected neighbour)
 
-   2.  If Binding SID (BSID) as per Segment Routing Architecture
-       [RFC8402] is assigned to all resolving tunnel(s), then local
-       label SHOULD be set to be equal to BSID value.
-
-   3.  If resolving tunnel is instantiated as result of processing
-       prefixSID, then this BGP speaker SHOULD allocate local label form
-       it's SRGB [RFC8402].
+   2.
 
 
 
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 15]
+Chan & Szarecki          Expires March 15, 2020                [Page 15]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
-   4.  If, given BGP speaker has local label already allocated for all
-       resolution tunnels of given BGP-LCU path, as result of processing
-       earlier routing events, this same value MUST be used.
+       1.  If BGP speaker is provided (e.g. by local configuration) with
+           explicit local label value bound address on BGP-LCU Next-Hop
+           attribute, it SHOULD be honored and used.
 
-   5.  Else, BGP speaker allocates label from free labels of it's
-       dynamic label block.
+       2.  If Peer Adjacency SID (PeerAdjSID) as per Segment Routing
+           Centralized BGP Egress Peer Engineering
+           [I-D.ietf-spring-segment-routing-central-epe] is assigned to
+           session given BGP-LCU path was learned from, then local label
+           SHOULD be set to be equal to PeerAdjSID value.
+
+       3.  TBD
+
+       4.  TBD
+
+   3.  If Next-Hop attribute of learned BGP-LCU path is remote
+
+   4.
+
+       1.  If BGP speaker is provided (e.g. by local configuration) with
+           same, single, explicit local label value bound to all
+           resolving tunnel(s), it SHOULD be honored and used.
+
+       2.  If Binding SID (BSID) as per Segment Routing Architecture
+           [RFC8402] is assigned to all resolving tunnel(s), then local
+           label SHOULD be set to be equal to BSID value.
+
+       3.  If resolving tunnel is instantiated as result of processing
+           prefixSID, then this BGP speaker SHOULD allocate local label
+           form it's SRGB [RFC8402].
+
+       4.  If, given BGP speaker has local label already allocated for
+           all resolution tunnels of given BGP-LCU path, as result of
+           processing earlier routing events, this same value MUST be
+           used.
+
+       5.  Else, BGP speaker allocates label from free labels of it's
+           dynamic label block.
 
    Please note that above procedure could result with local label value
    shared among multiple <COLOR,DESTINATION> prefixes, what is expected
    and desired scenario.
 
 7.  Deployment and Operation Consideration
+
+
+
+
+
+
+
+
+Chan & Szarecki          Expires March 15, 2020                [Page 16]
+
+Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
+
 
 7.1.  Building label stack
 
@@ -889,21 +932,27 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
    build labels stack in network control plane, as BGP-LCU path update
    propagates across domain border.  As result, ingress node would learn
    <COLOR,DESTINATION> prefixes with label stack needed to deliver
-
-
-
-
-Chan & Szarecki          Expires March 12, 2020                [Page 16]
-
-Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
-
-
    traffic to DESTINATION, with desired treatment (T-intent), across all
    downstream domains.
 
    Example below (Figure 6) shows BGP-LCU update flow across domains.
    The BGP Next-Hop attribute manipulation and resolution are also shown
    in Table 2.  Finally, MPLS FIB entries are also displayed.
+
+
+
+
+
+
+
+
+
+
+
+Chan & Szarecki          Expires March 15, 2020                [Page 17]
+
+Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
+
 
    <-------AS 1-------->   <---AS 2--->  <---AS 3--->
      +------+ +------+        +------+      +------+
@@ -949,7 +998,14 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 17]
+
+
+
+
+
+
+
+Chan & Szarecki          Expires March 15, 2020                [Page 18]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -1005,7 +1061,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 18]
+Chan & Szarecki          Expires March 15, 2020                [Page 19]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -1061,7 +1117,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 19]
+Chan & Szarecki          Expires March 15, 2020                [Page 20]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -1117,7 +1173,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 20]
+Chan & Szarecki          Expires March 15, 2020                [Page 21]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -1173,7 +1229,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 21]
+Chan & Szarecki          Expires March 15, 2020                [Page 22]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -1229,7 +1285,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 22]
+Chan & Szarecki          Expires March 15, 2020                [Page 23]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -1285,7 +1341,7 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
 
 
-Chan & Szarecki          Expires March 12, 2020                [Page 23]
+Chan & Szarecki          Expires March 15, 2020                [Page 24]
 
 Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
 
@@ -1316,6 +1372,12 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
               M., and D. Steinberg, "Seamless MPLS Architecture", draft-
               ietf-mpls-seamless-mpls-07 (work in progress), June 2014.
 
+   [I-D.ietf-spring-segment-routing-central-epe]
+              Filsfils, C., Previdi, S., Dawra, G., Aries, E., and D.
+              Afanasiev, "Segment Routing Centralized BGP Egress Peer
+              Engineering", draft-ietf-spring-segment-routing-central-
+              epe-10 (work in progress), December 2017.
+
    [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
               and W. Weiss, "An Architecture for Differentiated
               Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
@@ -1331,20 +1393,20 @@ Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
               RFC 7606, DOI 10.17487/RFC7606, August 2015,
               <https://www.rfc-editor.org/info/rfc7606>.
 
+
+
+
+
+Chan & Szarecki          Expires March 15, 2020                [Page 25]
+
+Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
+
+
    [RFC7811]  Enyedi, G., Csaszar, A., Atlas, A., Bowers, C., and A.
               Gopalan, "An Algorithm for Computing IP/LDP Fast Reroute
               Using Maximally Redundant Trees (MRT-FRR)", RFC 7811,
               DOI 10.17487/RFC7811, June 2016,
               <https://www.rfc-editor.org/info/rfc7811>.
-
-
-
-
-
-Chan & Szarecki          Expires March 12, 2020                [Page 24]
-
-Internet-Draft Inter-Domain Traffic Steering with BGP-LCU September 2019
-
 
    [RFC7911]  Walton, D., Retana, A., Chen, E., and J. Scudder,
               "Advertisement of Multiple Paths in BGP", RFC 7911,
@@ -1391,10 +1453,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-Chan & Szarecki          Expires March 12, 2020                [Page 25]
+Chan & Szarecki          Expires March 15, 2020                [Page 26]
